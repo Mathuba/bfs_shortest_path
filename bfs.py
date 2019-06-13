@@ -30,9 +30,43 @@ def add_edge(graph, vertex, vertex2):
             graph[v1] = v2
 
 
+def bfs(graph, start):
+    """Traverse indirected graph using BFS algorithm, starting from given
+    start vertex.
+
+    The shortest distance distance to each vertex visited by start vertex is
+    calculated and stored in list dist. For any unvisited vertex of the graph,
+    the value in dist is -1.
+
+    Parameters
+    ----------
+    graph: dictionary
+        The graph being traversed which is built as an adjacency list
+    start: int
+        The start vertex from which all connected nodes will be visited.
+    """
+
+    visited = []
+    dist = [-1] * (len(graph) + 1)
+    q = deque()
+
+    visited.append(start)
+    q.append(start)
+    dist[start] = 0
+
+    while q:
+        a_vert = q.popleft()
+        for neighbour in graph[a_vert]:
+            if neighbour not in visited:
+                visited.append(neighbour)
+                dist[neighbour] = dist[a_vert] + 1
+                q.append(neighbour)
+    return dist
+
+
 def distance(adj, s, t):
-    #write your code here
-    return -1
+    shortest_dist = bfs(adj, s)
+    return shortest_dist
 
 
 if __name__ == '__main__':
@@ -43,6 +77,4 @@ if __name__ == '__main__':
         add_edge(graph, vert1, vert2)
 
     start, end = map(int, sys.stdin.readline().split())
-    print(graph)
-
-    # print(distance(adj, s, t))
+    print(distance(graph, start, end))
