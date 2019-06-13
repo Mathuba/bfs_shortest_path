@@ -47,7 +47,7 @@ def bfs(graph, start):
     """
 
     visited = []
-    dist = [-1] * (len(graph) + 1)
+    dist = [-1] * (len(graph) + 1)      # store the distances from start
     q = deque()
 
     visited.append(start)
@@ -64,9 +64,20 @@ def bfs(graph, start):
     return dist
 
 
-def distance(adj, s, t):
-    shortest_dist = bfs(adj, s)
-    return shortest_dist
+def distance(adj, start, end):
+    """Return shrotest between vertex start and vertex end, or -1 if graph not connected.
+
+    Parameters
+    ----------
+    adj: dictionary
+        The adjacency graph to be checked
+    start: int
+        The start vertex of the undirected graph
+    end: int
+        The end vertex of the undirected graph.
+    """
+    shortest_dist = bfs(adj, start)
+    return shortest_dist[end]
 
 
 if __name__ == '__main__':
